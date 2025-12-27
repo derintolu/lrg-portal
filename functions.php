@@ -1,8 +1,8 @@
 <?php
 /**
- * Blocksy Child Theme - FRS
+ * Workspaces Theme - Blocksy Child Theme
  *
- * @package Blocksy_Child_FRS
+ * @package Workspaces_Theme
  */
 
 // Prevent direct access
@@ -14,26 +14,39 @@ if (!defined('ABSPATH')) {
  * Load child theme styles (Blocksy doesn't auto-load by default)
  */
 add_action('wp_enqueue_scripts', function () {
-    wp_enqueue_style('blocksy-child-style', get_stylesheet_uri());
+    wp_enqueue_style('workspaces-style', get_stylesheet_uri());
+
+    // Enqueue Interactivity API for workspace navigation
+    if (function_exists('workspaces_is_workspace_page') && workspaces_is_workspace_page()) {
+        wp_enqueue_script_module('@wordpress/interactivity-router');
+    }
 });
 
 /**
  * Child theme constants
  */
-define('BLOCKSY_CHILD_FRS_VERSION', '1.0.0');
-define('BLOCKSY_CHILD_FRS_PATH', get_stylesheet_directory());
-define('BLOCKSY_CHILD_FRS_URL', get_stylesheet_directory_uri());
+define('WORKSPACES_THEME_VERSION', '1.0.0');
+define('WORKSPACES_THEME_PATH', get_stylesheet_directory());
+define('WORKSPACES_THEME_URL', get_stylesheet_directory_uri());
 
 /**
  * Load includes
  */
-require_once BLOCKSY_CHILD_FRS_PATH . '/includes/sidebar-insights-slider.php';
+require_once WORKSPACES_THEME_PATH . '/includes/sidebar-insights-slider.php';
 
 /**
- * Tell frs-lrg to load portal assets on portal pages (using theme template, not shortcode in post content)
+ * Load Lucide Icons from workspaces plugin for sidebar navigation
+ */
+$lucide_icons_path = WP_PLUGIN_DIR . '/workspaces/includes/class-lucide-icons.php';
+if (file_exists($lucide_icons_path) && !class_exists('Lucide_Icons')) {
+    require_once $lucide_icons_path;
+}
+
+/**
+ * Tell frs-lrg to load workspace assets on workspace pages (using theme template, not shortcode in post content)
  */
 add_filter('lrh_should_load_portal', function($should_load) {
-    if (blocksy_child_is_portal_page()) {
+    if (workspaces_is_workspace_page()) {
         return true;
     }
     return $should_load;
@@ -44,9 +57,9 @@ add_filter('lrh_should_load_portal', function($should_load) {
  */
 add_action('widgets_init', function () {
     register_sidebar(array(
-        'name'          => __('FRS Below React Sidebar', 'blocksy-child-frs'),
-        'id'            => 'frs-below-react-sidebar',
-        'description'   => __('Widget area below the React sidebar component.', 'blocksy-child-frs'),
+        'name'          => __('Workspace Below Sidebar', 'workspaces'),
+        'id'            => 'workspace-below-sidebar',
+        'description'   => __('Widget area below the workspace sidebar component.', 'workspaces'),
         'before_widget' => '<div id="%1$s" class="widget %2$s">',
         'after_widget'  => '</div>',
         'before_title'  => '<h3 class="widget-title">',
@@ -54,10 +67,10 @@ add_action('widgets_init', function () {
     ));
 
     register_sidebar(array(
-        'name'          => __('Portal Sidebar Header', 'blocksy-child-frs'),
-        'id'            => 'portal-sidebar-header',
-        'description'   => __('16:9 header area at top of portal sidebar. Use Cover block for image/video backgrounds.', 'blocksy-child-frs'),
-        'before_widget' => '<div id="%1$s" class="widget portal-header-widget %2$s">',
+        'name'          => __('Workspace Sidebar Header', 'workspaces'),
+        'id'            => 'workspace-sidebar-header',
+        'description'   => __('16:9 header area at top of workspace sidebar. Use Cover block for image/video backgrounds.', 'workspaces'),
+        'before_widget' => '<div id="%1$s" class="widget workspace-header-widget %2$s">',
         'after_widget'  => '</div>',
         'before_title'  => '',
         'after_title'   => '',
@@ -69,105 +82,105 @@ add_action('widgets_init', function () {
  */
 add_action('customize_register', function ($wp_customize) {
     // Add Header Background Section
-    $wp_customize->add_section('frs_header_background', array(
-        'title'       => __('FRS Header Background', 'blocksy-child-frs'),
-        'description' => __('Customize the header background image or video.', 'blocksy-child-frs'),
+    $wp_customize->add_section('workspaces_header_background', array(
+        'title'       => __('Workspace Header Background', 'workspaces'),
+        'description' => __('Customize the header background image or video.', 'workspaces'),
         'priority'    => 30,
     ));
 
     // Background Type Setting
-    $wp_customize->add_setting('frs_header_bg_type', array(
+    $wp_customize->add_setting('workspaces_header_bg_type', array(
         'default'           => 'none',
-        'sanitize_callback' => 'blocksy_child_frs_sanitize_bg_type',
+        'sanitize_callback' => 'workspaces_sanitize_bg_type',
         'transport'         => 'refresh',
     ));
 
-    $wp_customize->add_control('frs_header_bg_type', array(
-        'label'    => __('Background Type', 'blocksy-child-frs'),
-        'section'  => 'frs_header_background',
+    $wp_customize->add_control('workspaces_header_bg_type', array(
+        'label'    => __('Background Type', 'workspaces'),
+        'section'  => 'workspaces_header_background',
         'type'     => 'select',
         'choices'  => array(
-            'none'  => __('None', 'blocksy-child-frs'),
-            'image' => __('Image', 'blocksy-child-frs'),
-            'video' => __('Video', 'blocksy-child-frs'),
+            'none'  => __('None', 'workspaces'),
+            'image' => __('Image', 'workspaces'),
+            'video' => __('Video', 'workspaces'),
         ),
     ));
 
     // Background Image Setting
-    $wp_customize->add_setting('frs_header_bg_image', array(
+    $wp_customize->add_setting('workspaces_header_bg_image', array(
         'default'           => '',
         'sanitize_callback' => 'esc_url_raw',
         'transport'         => 'refresh',
     ));
 
-    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'frs_header_bg_image', array(
-        'label'           => __('Header Background Image', 'blocksy-child-frs'),
-        'section'         => 'frs_header_background',
+    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'workspaces_header_bg_image', array(
+        'label'           => __('Header Background Image', 'workspaces'),
+        'section'         => 'workspaces_header_background',
         'active_callback' => function () {
-            return get_theme_mod('frs_header_bg_type') === 'image';
+            return get_theme_mod('workspaces_header_bg_type') === 'image';
         },
     )));
 
     // Background Video URL Setting
-    $wp_customize->add_setting('frs_header_bg_video', array(
+    $wp_customize->add_setting('workspaces_header_bg_video', array(
         'default'           => '',
         'sanitize_callback' => 'esc_url_raw',
         'transport'         => 'refresh',
     ));
 
-    $wp_customize->add_control('frs_header_bg_video', array(
-        'label'           => __('Header Background Video URL', 'blocksy-child-frs'),
-        'description'     => __('Enter a URL to an MP4 video file.', 'blocksy-child-frs'),
-        'section'         => 'frs_header_background',
+    $wp_customize->add_control('workspaces_header_bg_video', array(
+        'label'           => __('Header Background Video URL', 'workspaces'),
+        'description'     => __('Enter a URL to an MP4 video file.', 'workspaces'),
+        'section'         => 'workspaces_header_background',
         'type'            => 'url',
         'active_callback' => function () {
-            return get_theme_mod('frs_header_bg_type') === 'video';
+            return get_theme_mod('workspaces_header_bg_type') === 'video';
         },
     ));
 
     // Video Poster Image (fallback)
-    $wp_customize->add_setting('frs_header_bg_video_poster', array(
+    $wp_customize->add_setting('workspaces_header_bg_video_poster', array(
         'default'           => '',
         'sanitize_callback' => 'esc_url_raw',
         'transport'         => 'refresh',
     ));
 
-    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'frs_header_bg_video_poster', array(
-        'label'           => __('Video Poster Image (Fallback)', 'blocksy-child-frs'),
-        'description'     => __('Displayed while video loads or on mobile.', 'blocksy-child-frs'),
-        'section'         => 'frs_header_background',
+    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'workspaces_header_bg_video_poster', array(
+        'label'           => __('Video Poster Image (Fallback)', 'workspaces'),
+        'description'     => __('Displayed while video loads or on mobile.', 'workspaces'),
+        'section'         => 'workspaces_header_background',
         'active_callback' => function () {
-            return get_theme_mod('frs_header_bg_type') === 'video';
+            return get_theme_mod('workspaces_header_bg_type') === 'video';
         },
     )));
 
     // Overlay Color Setting
-    $wp_customize->add_setting('frs_header_bg_overlay_color', array(
+    $wp_customize->add_setting('workspaces_header_bg_overlay_color', array(
         'default'           => 'rgba(0, 0, 0, 0.3)',
         'sanitize_callback' => 'sanitize_text_field',
         'transport'         => 'refresh',
     ));
 
-    $wp_customize->add_control('frs_header_bg_overlay_color', array(
-        'label'           => __('Overlay Color', 'blocksy-child-frs'),
-        'description'     => __('Use rgba format, e.g., rgba(0, 0, 0, 0.3)', 'blocksy-child-frs'),
-        'section'         => 'frs_header_background',
+    $wp_customize->add_control('workspaces_header_bg_overlay_color', array(
+        'label'           => __('Overlay Color', 'workspaces'),
+        'description'     => __('Use rgba format, e.g., rgba(0, 0, 0, 0.3)', 'workspaces'),
+        'section'         => 'workspaces_header_background',
         'type'            => 'text',
         'active_callback' => function () {
-            return get_theme_mod('frs_header_bg_type') !== 'none';
+            return get_theme_mod('workspaces_header_bg_type') !== 'none';
         },
     ));
 
     // Header Height Setting
-    $wp_customize->add_setting('frs_header_bg_height', array(
+    $wp_customize->add_setting('workspaces_header_bg_height', array(
         'default'           => '400',
         'sanitize_callback' => 'absint',
         'transport'         => 'refresh',
     ));
 
-    $wp_customize->add_control('frs_header_bg_height', array(
-        'label'           => __('Header Height (px)', 'blocksy-child-frs'),
-        'section'         => 'frs_header_background',
+    $wp_customize->add_control('workspaces_header_bg_height', array(
+        'label'           => __('Header Height (px)', 'workspaces'),
+        'section'         => 'workspaces_header_background',
         'type'            => 'number',
         'input_attrs'     => array(
             'min'  => 100,
@@ -175,7 +188,7 @@ add_action('customize_register', function ($wp_customize) {
             'step' => 10,
         ),
         'active_callback' => function () {
-            return get_theme_mod('frs_header_bg_type') !== 'none';
+            return get_theme_mod('workspaces_header_bg_type') !== 'none';
         },
     ));
 });
@@ -183,7 +196,7 @@ add_action('customize_register', function ($wp_customize) {
 /**
  * Sanitize background type
  */
-function blocksy_child_frs_sanitize_bg_type($value) {
+function workspaces_sanitize_bg_type($value) {
     $valid = array('none', 'image', 'video');
     return in_array($value, $valid, true) ? $value : 'none';
 }
@@ -192,17 +205,17 @@ function blocksy_child_frs_sanitize_bg_type($value) {
  * Output header background CSS
  */
 add_action('wp_head', function () {
-    $bg_type = get_theme_mod('frs_header_bg_type', 'none');
+    $bg_type = get_theme_mod('workspaces_header_bg_type', 'none');
 
     if ($bg_type === 'none') {
         return;
     }
 
-    $overlay_color = get_theme_mod('frs_header_bg_overlay_color', 'rgba(0, 0, 0, 0.3)');
-    $height = get_theme_mod('frs_header_bg_height', 400);
+    $overlay_color = get_theme_mod('workspaces_header_bg_overlay_color', 'rgba(0, 0, 0, 0.3)');
+    $height = get_theme_mod('workspaces_header_bg_height', 400);
 
     if ($bg_type === 'image') {
-        $image_url = get_theme_mod('frs_header_bg_image', '');
+        $image_url = get_theme_mod('workspaces_header_bg_image', '');
         if ($image_url) {
             echo '<style>
                 .frs-header-background {
@@ -233,8 +246,8 @@ add_action('wp_head', function () {
             </style>';
         }
     } elseif ($bg_type === 'video') {
-        $video_url = get_theme_mod('frs_header_bg_video', '');
-        $poster_url = get_theme_mod('frs_header_bg_video_poster', '');
+        $video_url = get_theme_mod('workspaces_header_bg_video', '');
+        $poster_url = get_theme_mod('workspaces_header_bg_video_poster', '');
 
         if ($video_url) {
             echo '<style>
@@ -290,20 +303,20 @@ add_action('wp_head', function () {
 
 /**
  * Render header background section
- * Usage: blocksy_child_frs_render_header_background();
+ * Usage: workspaces_render_header_background();
  */
-function blocksy_child_frs_render_header_background() {
-    $bg_type = get_theme_mod('frs_header_bg_type', 'none');
+function workspaces_render_header_background() {
+    $bg_type = get_theme_mod('workspaces_header_bg_type', 'none');
 
     if ($bg_type === 'none') {
         return;
     }
 
-    echo '<div class="frs-header-background">';
+    echo '<div class="workspace-header-background">';
 
     if ($bg_type === 'video') {
-        $video_url = get_theme_mod('frs_header_bg_video', '');
-        $poster_url = get_theme_mod('frs_header_bg_video_poster', '');
+        $video_url = get_theme_mod('workspaces_header_bg_video', '');
+        $poster_url = get_theme_mod('workspaces_header_bg_video_poster', '');
 
         if ($video_url) {
             echo '<video autoplay muted loop playsinline';
@@ -316,8 +329,8 @@ function blocksy_child_frs_render_header_background() {
         }
     }
 
-    echo '<div class="frs-header-background-content">';
-    do_action('frs_header_background_content');
+    echo '<div class="workspace-header-background-content">';
+    do_action('workspaces_header_background_content');
     echo '</div>';
     echo '</div>';
 }
@@ -326,21 +339,20 @@ function blocksy_child_frs_render_header_background() {
  * Auto-insert header background after header (optional)
  */
 add_action('blocksy:header:after', function () {
-    $bg_type = get_theme_mod('frs_header_bg_type', 'none');
-    $auto_insert = apply_filters('frs_auto_insert_header_background', false);
+    $bg_type = get_theme_mod('workspaces_header_bg_type', 'none');
+    $auto_insert = apply_filters('workspaces_auto_insert_header_background', false);
 
     if ($bg_type !== 'none' && $auto_insert) {
-        blocksy_child_frs_render_header_background();
+        workspaces_render_header_background();
     }
 });
 
 /**
- * Include Portal Sidebar Frame via Blocksy hook
+ * Include Workspace Sidebar Frame via Blocksy hook
+ * Always present when theme is active - sidebar can be toggled offcanvas
  */
 add_action('blocksy:header:after', function () {
-    if (blocksy_child_is_portal_page()) {
-        include get_stylesheet_directory() . '/portal-sidebar-frame.php';
-    }
+    include get_stylesheet_directory() . '/workspace-sidebar-frame.php';
 });
 
 /**
@@ -372,10 +384,10 @@ add_action('wp_footer', function () {
 }, 100);
 
 /**
- * Custom Nav Walker for Portal Sidebar Menu
+ * Custom Nav Walker for Workspace Sidebar Menu
  * Generates navigation with icons, dropdowns, and proper styling
  */
-class Portal_Nav_Walker extends Walker_Nav_Menu {
+class Workspace_Nav_Walker extends Walker_Nav_Menu {
     private $menu_counter = 0;
 
     /**
@@ -383,45 +395,37 @@ class Portal_Nav_Walker extends Walker_Nav_Menu {
      */
     public function start_el(&$output, $item, $depth = 0, $args = null, $id = 0) {
         // Get icon from menu item meta
-        $icon = get_post_meta($item->ID, '_menu_item_icon', true) ?: 'circle';
-
-        // Check if item has children
+        $icon_name = get_post_meta($item->ID, '_menu_item_icon', true);
         $has_children = !empty($item->classes) && in_array('menu-item-has-children', $item->classes);
-
-        // Get active state
         $is_active = in_array('current-menu-item', $item->classes) || in_array('current-page-ancestor', $item->classes);
         $active_class = $is_active ? ' active' : '';
 
-        if ($depth === 0) {
-            // Parent item
-            if ($has_children) {
-                // Generate unique menu ID
-                $menu_id = 'menu-' . ++$this->menu_counter;
+        // Icon markup using Lucide
+        $icon_html = $icon_name ? Lucide_Icons::render($icon_name, 20) : '';
 
-                // Parent with clickable link AND dropdown toggle
+        if ($depth === 0) {
+            if ($has_children) {
+                $menu_id = 'menu-' . ++$this->menu_counter;
                 $output .= '<div class="flex items-center">';
-                $output .= '<a href="' . esc_url($item->url) . '" class="flex items-center gap-2 px-4 py-3 text-base font-semibold text-white/70 hover:text-white hover:bg-white/5 transition-colors frs-nav-link flex-1' . $active_class . '">';
-                $output .= $this->get_icon_svg($icon);
+                $output .= '<a href="' . esc_url($item->url) . '" class="flex items-center gap-2 px-4 py-3 text-white/70 hover:text-white hover:bg-white/5 transition-colors frs-nav-link flex-1' . $active_class . '">';
+                $output .= $icon_html;
                 $output .= '<span>' . esc_html($item->title) . '</span>';
                 $output .= '</a>';
-                $output .= '<button onclick="toggleMenu(\'' . $this->menu_counter . '\', event)" class="px-3 py-3 text-white/70 hover:text-white hover:bg-white/5 transition-colors" style="background: none; border: none; cursor: pointer;">';
+                $output .= '<button onclick="toggleMenu(\'' . $this->menu_counter . '\', event)" class="px-3 py-3 text-white/70 hover:text-white hover:bg-white/5 transition-colors" style="background: none; border: none; outline: none; cursor: pointer;">';
                 $output .= '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="frs-chevron" style="transition: transform 0.2s ease-in-out;"><path d="m9 18 6-6-6-6"/></svg>';
                 $output .= '</button>';
                 $output .= '</div>';
-
-                // Store menu ID for submenu
                 $item->menu_id = $menu_id;
             } else {
-                // Parent link without children
-                $output .= '<a href="' . esc_url($item->url) . '" data-wp-router-link class="flex items-center gap-2 px-4 py-3 text-base font-semibold text-white/70 hover:text-white hover:bg-white/5 transition-colors frs-nav-link' . $active_class . '">';
-                $output .= $this->get_icon_svg($icon);
+                $output .= '<a href="' . esc_url($item->url) . '" class="flex items-center gap-2 px-4 py-3 text-white/70 hover:text-white hover:bg-white/5 transition-colors frs-nav-link' . $active_class . '">';
+                $output .= $icon_html;
                 $output .= '<span>' . esc_html($item->title) . '</span>';
                 $output .= '</a>';
             }
         } else {
-            // Child item (submenu link)
-            $output .= '<a href="' . esc_url($item->url) . '" data-wp-router-link class="block px-4 py-2 text-sm text-white/60 hover:text-white hover:bg-white/5 transition-colors frs-nav-link' . $active_class . '">';
-            $output .= esc_html($item->title);
+            $output .= '<a href="' . esc_url($item->url) . '" class="flex items-center gap-2 pl-8 pr-4 py-2 text-sm text-white/60 hover:text-white hover:bg-white/5 transition-colors frs-nav-link' . $active_class . '">';
+            $output .= $icon_html;
+            $output .= '<span>' . esc_html($item->title) . '</span>';
             $output .= '</a>';
         }
     }
@@ -434,7 +438,7 @@ class Portal_Nav_Walker extends Walker_Nav_Menu {
         // We set this in start_el
         $menu_id = 'menu-' . $this->menu_counter;
 
-        $output .= '<div id="' . esc_attr($menu_id) . '" class="frs-submenu pl-6 border-l border-white/10 ml-4" style="display: none;">';
+        $output .= '<div id="' . esc_attr($menu_id) . '" class="frs-submenu pl-6 ml-4" style="display: none;">';
     }
 
     /**
@@ -471,53 +475,40 @@ class Portal_Nav_Walker extends Walker_Nav_Menu {
 }
 
 /**
- * Portal Frame Layout
+ * Workspace Frame Layout
  * Creates an app-like shell with logo section, top bar, sidebar, and content area
  */
 
-// Check if current page should use portal frame
-function blocksy_child_is_portal_page() {
-    // Check if we're on a portal page post type using get_queried_object
-    // This works during wp_enqueue_scripts, unlike is_singular()
+// Check if current page should use workspace frame
+function workspaces_is_workspace_page() {
     $queried_object = get_queried_object();
+
+    // Check if we're on a workspace taxonomy archive
+    if ($queried_object instanceof WP_Term && $queried_object->taxonomy === 'workspace') {
+        return true;
+    }
+
+    // Check if current post/page has a workspace assigned
+    if ($queried_object && isset($queried_object->ID)) {
+        $terms = get_the_terms($queried_object->ID, 'workspace');
+        if ($terms && !is_wp_error($terms) && !empty($terms)) {
+            return true;
+        }
+    }
+
+    // Legacy portal post types (until migrated)
     if ($queried_object && isset($queried_object->post_type)) {
-        $portal_post_types = array('lo_portal_page', 'frs_re_portal', 'frs_partner_portal', 'workspace');
-        if (in_array($queried_object->post_type, $portal_post_types)) {
+        $legacy_types = array('lo_portal_page', 'frs_re_portal', 'frs_partner_portal');
+        if (in_array($queried_object->post_type, $legacy_types)) {
             return true;
         }
     }
-
-    // Legacy: Check if we're on a portal page or its subpage
-    if (is_page()) {
-        global $post;
-
-        // Get the page slug
-        $slug = $post->post_name;
-
-        // Portal container pages
-        $portal_pages = array('lo', 're');
-
-        // Check if current page is a portal container
-        if (in_array($slug, $portal_pages)) {
-            return true;
-        }
-
-        // Check if parent is a portal container
-        if ($post->post_parent) {
-            $parent = get_post($post->post_parent);
-            if ($parent && in_array($parent->post_name, $portal_pages)) {
-                return true;
-            }
-        }
-    }
-
-    // BuddyPress removed - no longer checking bp_is_user()
 
     return false;
 }
 
-// Get the portal type (lo or re)
-function blocksy_child_get_portal_type() {
+// Get the workspace type (lo or re)
+function workspaces_get_workspace_type() {
     if (!is_page()) {
         return null;
     }
@@ -549,14 +540,9 @@ function blocksy_child_get_portal_type() {
 }
 
 
-// Enqueue portal frame assets
-// Using template_redirect hook instead of wp_enqueue_scripts to ensure queried object is set
+// Enqueue workspace frame assets
+// Sidebar CSS always loaded since sidebar is present on all pages
 add_action('template_redirect', function() {
-    // Only enqueue on portal pages
-    if (!blocksy_child_is_portal_page()) {
-        return;
-    }
-
     // Add enqueue action that will run during wp_print_scripts
     add_action('wp_print_scripts', function() {
     $manifest_path = get_stylesheet_directory() . '/assets/sidebar/manifest.json';
@@ -574,7 +560,7 @@ add_action('template_redirect', function() {
                     'frs-sidebar-css',
                     get_stylesheet_directory_uri() . '/assets/sidebar/' . $css,
                     [],
-                    BLOCKSY_CHILD_FRS_VERSION
+                    WORKSPACES_THEME_VERSION
                 );
             }
 
@@ -583,7 +569,7 @@ add_action('template_redirect', function() {
                 'frs-sidebar',
                 get_stylesheet_directory_uri() . '/assets/sidebar/' . $main_file,
                 [],
-                BLOCKSY_CHILD_FRS_VERSION,
+                WORKSPACES_THEME_VERSION,
                 true
             );
             // Add module type attribute
@@ -606,7 +592,7 @@ add_action('template_redirect', function() {
                     'frs-components-css',
                     get_stylesheet_directory_uri() . '/assets/sidebar/' . $css,
                     [],
-                    BLOCKSY_CHILD_FRS_VERSION
+                    WORKSPACES_THEME_VERSION
                 );
             }
 
@@ -615,7 +601,7 @@ add_action('template_redirect', function() {
                 'frs-components',
                 get_stylesheet_directory_uri() . '/assets/sidebar/' . $component_file,
                 [],
-                BLOCKSY_CHILD_FRS_VERSION,
+                WORKSPACES_THEME_VERSION,
                 true
             );
             // Add module type attribute for ES module support
@@ -633,20 +619,20 @@ add_action('template_redirect', function() {
         \LendingResourceHub\Assets\Frontend::get_instance()->enqueue_portal_assets_public();
     }
 
-    // Add portal frame styles
-    wp_add_inline_style('blocksy-child-style', '
-        body.portal-frame {
+    // Add workspace frame styles
+    wp_add_inline_style('workspaces-style', '
+        body.workspace-frame {
             margin: 0;
             padding: 0;
             overflow: hidden;
         }
 
-        body.portal-frame #main-container {
+        body.workspace-frame #main-container {
             margin-top: 0 !important;
             padding-top: 0 !important;
         }
 
-        .portal-frame-container {
+        .workspace-frame-container {
             display: flex;
             height: 100vh;
             max-height: 100vh;
@@ -655,7 +641,7 @@ add_action('template_redirect', function() {
             position: relative;
         }
 
-        .portal-sidebar-wrapper {
+        .workspace-sidebar-wrapper {
             width: 320px;
             display: flex;
             flex-direction: column;
@@ -668,7 +654,7 @@ add_action('template_redirect', function() {
             z-index: 100;
         }
 
-        .portal-logo-section {
+        .workspace-logo-section {
             background: #0b102c;
             height: 48px;
             display: flex;
@@ -678,19 +664,19 @@ add_action('template_redirect', function() {
             flex-shrink: 0;
         }
 
-        .portal-logo-section img {
+        .workspace-logo-section img {
             height: 32px;
             width: auto;
         }
 
-        .portal-sidebar-container {
+        .workspace-sidebar-container {
             flex: 1;
             background: #0b102c;
             /* border-right: 1px solid #e5e7eb; */
             overflow-y: auto;
         }
 
-        .portal-content-wrapper {
+        .workspace-content-wrapper {
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -700,7 +686,7 @@ add_action('template_redirect', function() {
             max-height: 100vh;
         }
 
-        .portal-top-bar {
+        .workspace-top-bar {
             background: #fff;
             border-bottom: 1px solid #e5e7eb;
             height: 48px;
@@ -711,19 +697,19 @@ add_action('template_redirect', function() {
             flex-shrink: 0;
         }
 
-        .portal-top-bar-left {
+        .workspace-top-bar-left {
             display: flex;
             align-items: center;
             gap: 1rem;
         }
 
-        .portal-top-bar-right {
+        .workspace-top-bar-right {
             display: flex;
             align-items: center;
             gap: 1rem;
         }
 
-        .portal-content-area {
+        .workspace-content-area {
             flex: 1;
             overflow-y: auto;
             overflow-x: hidden;
@@ -731,22 +717,22 @@ add_action('template_redirect', function() {
             min-height: 0;
         }
 
-        .portal-content-area > * {
+        .workspace-content-area > * {
             margin-top: 0 !important;
         }
 
-        .portal-content-area .entry-content {
+        .workspace-content-area .entry-content {
             margin-top: 0 !important;
             padding-top: 0 !important;
         }
 
-        .portal-content-area h2,
-        .portal-content-area .wp-block-heading {
+        .workspace-content-area h2,
+        .workspace-content-area .wp-block-heading {
             margin-top: 0 !important;
         }
 
         @media (max-width: 768px) {
-            .portal-sidebar-wrapper {
+            .workspace-sidebar-wrapper {
                 position: fixed;
                 left: -280px;
                 top: 0;
@@ -755,7 +741,7 @@ add_action('template_redirect', function() {
                 transition: left 0.3s ease;
             }
 
-            .portal-sidebar-wrapper.open {
+            .workspace-sidebar-wrapper.open {
                 left: 0;
             }
         }
@@ -763,37 +749,54 @@ add_action('template_redirect', function() {
     }); // End wp_print_scripts
 }); // End template_redirect
 
-// Add body class for portal pages
+// Add body class for workspace sidebar - always present when theme is active
 add_filter('body_class', function($classes) {
-    if (blocksy_child_is_portal_page()) {
-        $classes[] = 'portal-frame';
-
-        // Don't add has-portal-sidebar class for frs_re_portal - they have their own React sidebar
-        $queried_object = get_queried_object();
-        if (!($queried_object && isset($queried_object->post_type) && $queried_object->post_type === 'frs_re_portal')) {
-            $classes[] = 'has-portal-sidebar';
-        }
+    // Don't add has-workspace-sidebar class for frs_re_portal - they have their own React sidebar
+    $queried_object = get_queried_object();
+    if ($queried_object && isset($queried_object->post_type) && $queried_object->post_type === 'frs_re_portal') {
+        return $classes;
     }
+
+    $classes[] = 'has-workspace-sidebar';
+
+    // Additional class for workspace-specific pages
+    if (workspaces_is_workspace_page()) {
+        $classes[] = 'workspace-frame';
+    }
+
     return $classes;
 });
 
 
 /**
- * Interactivity API for Portal Navigation
+ * Interactivity API for Workspace Navigation & Sidebar
  * Enables client-side navigation using @wordpress/interactivity-router
  */
 add_action('wp_enqueue_scripts', function() {
-    if (!blocksy_child_is_portal_page()) {
-        return;
-    }
-
-    // Enqueue portal navigation module with router dependency
-    // wp_enqueue_script_module is available since WordPress 6.5
+    // Sidebar toggle is always available when theme is active
     wp_enqueue_script_module(
-        'frs-portal-navigation',
-        get_stylesheet_directory_uri() . '/assets/js/portal-navigation.js',
-        ['@wordpress/interactivity', '@wordpress/interactivity-router'],
-        BLOCKSY_CHILD_FRS_VERSION
+        'workspaces-sidebar',
+        get_stylesheet_directory_uri() . '/assets/js/sidebar-view.js',
+        ['@wordpress/interactivity'],
+        WORKSPACES_THEME_VERSION
     );
+
+    // Navigation router only on workspace pages
+    if (workspaces_is_workspace_page()) {
+        wp_enqueue_script_module(
+            'workspaces-navigation',
+            get_stylesheet_directory_uri() . '/assets/js/workspace-navigation.js',
+            ['@wordpress/interactivity', '@wordpress/interactivity-router'],
+            WORKSPACES_THEME_VERSION
+        );
+    }
 });
 
+/**
+ * Register workspace menu location
+ */
+add_action('after_setup_theme', function () {
+    register_nav_menus(array(
+        'workspace_menu' => __('Workspace Sidebar Menu', 'workspaces'),
+    ));
+});
