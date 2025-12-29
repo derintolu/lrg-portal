@@ -199,13 +199,20 @@ body.sidebar-offcanvas.has-workspace-sidebar .site-main {
     margin-left: 0;
 }
 
-/* Course/lesson pages - remove padding when sidebar is collapsed */
-body.sidebar-offcanvas.single-courses .site-main,
+/* Course/lesson pages - no side padding, only top padding for header bar */
+body.single-lesson .site-main,
+body.single-tutor_quiz .site-main,
+body.single-tutor_assignments .site-main {
+    padding: 0 !important;
+    padding-top: var(--workspace-bar-height) !important;
+    margin-left: var(--workspace-sidebar-width);
+}
+
+/* When sidebar is collapsed, remove left margin too */
 body.sidebar-offcanvas.single-lesson .site-main,
 body.sidebar-offcanvas.single-tutor_quiz .site-main,
 body.sidebar-offcanvas.single-tutor_assignments .site-main {
-    padding: 0;
-    padding-top: var(--workspace-bar-height);
+    margin-left: 0;
 }
 
 .workspace-page-title {

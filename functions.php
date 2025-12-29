@@ -762,6 +762,20 @@ add_filter('body_class', function($classes) {
         $classes[] = 'workspace-frame';
     }
 
+    // Add sidebar-offcanvas class for course pages (sidebar collapsed by default)
+    $workspace_slug = get_query_var('workspace');
+    $is_course_page = (
+        $workspace_slug === 'learning' ||
+        is_singular('courses') ||
+        is_singular('lesson') ||
+        is_singular('tutor_quiz') ||
+        is_singular('tutor_assignments') ||
+        is_post_type_archive('courses')
+    );
+    if ($is_course_page) {
+        $classes[] = 'sidebar-offcanvas';
+    }
+
     return $classes;
 });
 
@@ -779,8 +793,15 @@ add_action('wp_enqueue_scripts', function() {
         WORKSPACES_THEME_VERSION
     );
 
-    // Header datetime display on workspace pages
-    if (workspaces_is_workspace_page()) {
+    // Header datetime display on workspace and course pages
+    $is_course_page = (
+        is_singular('courses') ||
+        is_singular('lesson') ||
+        is_singular('tutor_quiz') ||
+        is_singular('tutor_assignments') ||
+        is_post_type_archive('courses')
+    );
+    if (workspaces_is_workspace_page() || $is_course_page) {
         wp_enqueue_script_module(
             'workspaces-datetime',
             get_stylesheet_directory_uri() . '/assets/js/datetime-view.js',

@@ -120,10 +120,18 @@ if (in_array('loan_officer', $user_roles)) {
         <!-- Menu items - take available space -->
         <nav class="flex flex-col flex-1 pt-4" id="workspace-nav" data-wp-interactive="workspaces">
             <?php
-            // Special handling for Learning workspace - use Tutor dashboard sections
-            $is_learning_workspace = $current_workspace && $current_workspace->slug === 'learning';
+            // Special handling for Learning workspace and Tutor LMS pages - use Tutor dashboard sections
+            $is_learning_workspace = ($current_workspace && $current_workspace->slug === 'learning');
+            $is_tutor_page = (
+                is_singular('courses') ||
+                is_singular('lesson') ||
+                is_singular('tutor_quiz') ||
+                is_singular('tutor_assignments') ||
+                is_post_type_archive('courses')
+            );
+            $show_learning_menu = ($is_learning_workspace || $is_tutor_page);
 
-            if ($is_learning_workspace && class_exists('Workspaces_Tutor_Dashboard')) :
+            if ($show_learning_menu && class_exists('Workspaces_Tutor_Dashboard')) :
                 $tutor_dashboard = Workspaces_Tutor_Dashboard::instance();
                 $sections = $tutor_dashboard->get_dashboard_sections();
                 $dashboard_url = home_url('/learning/');

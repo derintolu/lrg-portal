@@ -28,15 +28,15 @@ store('workspaces/sidebar', {
             const saved = localStorage.getItem(key);
 
             if (saved !== null) {
-                // Use saved preference
+                // Use saved preference and update body class accordingly
                 context.isCollapsed = saved === 'true';
+            } else if (context.isCoursePage) {
+                // No saved preference for course pages - default to collapsed
+                context.isCollapsed = true;
             }
-            // If no saved preference, use the default from PHP context
-            // (course pages default to collapsed, others to expanded)
 
-            if (context.isCollapsed) {
-                document.body.classList.add('sidebar-offcanvas');
-            }
+            // Sync body class with context state
+            document.body.classList.toggle('sidebar-offcanvas', context.isCollapsed);
         },
     },
 });
