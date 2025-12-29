@@ -779,6 +779,16 @@ add_action('wp_enqueue_scripts', function() {
         WORKSPACES_THEME_VERSION
     );
 
+    // Header datetime display on workspace pages
+    if (workspaces_is_workspace_page()) {
+        wp_enqueue_script_module(
+            'workspaces-datetime',
+            get_stylesheet_directory_uri() . '/assets/js/datetime-view.js',
+            ['@wordpress/interactivity'],
+            WORKSPACES_THEME_VERSION
+        );
+    }
+
     // Navigation router only on workspace pages
     if (workspaces_is_workspace_page()) {
         wp_enqueue_script_module(

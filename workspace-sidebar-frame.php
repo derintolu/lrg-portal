@@ -54,6 +54,15 @@ if ($workspace_slug === 'learning') {
         <div class="workspace-header-content">
             <h1 class="workspace-page-title"><?php echo esc_html($header_title); ?></h1>
         </div>
+        <!-- Date/Time Display -->
+        <div
+            class="workspace-header-datetime"
+            data-wp-interactive="workspaces/datetime"
+            data-wp-init="callbacks.startClock"
+        >
+            <span class="header-date" data-wp-text="state.dateString"></span>
+            <span class="header-time" data-wp-text="state.timeString"></span>
+        </div>
     </div>
 
     <!-- Workspace Sidebar Frame -->
@@ -179,6 +188,28 @@ body.sidebar-offcanvas.has-workspace-sidebar .site-main {
 .workspace-page-title {
     margin: 0;
     font-size: var(--wp--preset--font-size--lg, 20px);
+    font-weight: 600;
+    color: var(--wp--preset--color--workspace-dark, #0b102c);
+}
+
+/* Header DateTime Display */
+.workspace-header-datetime {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 0 24px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.header-date {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--wp--preset--color--workspace-dark, #0b102c);
+    opacity: 0.7;
+}
+
+.header-time {
+    font-size: 16px;
     font-weight: 600;
     color: var(--wp--preset--color--workspace-dark, #0b102c);
 }
