@@ -201,16 +201,10 @@ body.sidebar-offcanvas.has-workspace-sidebar .site-main {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-.header-date {
+.header-date,
+.header-time {
     font-size: 14px;
     font-weight: 500;
-    color: var(--wp--preset--color--workspace-dark, #0b102c);
-    opacity: 0.7;
-}
-
-.header-time {
-    font-size: 16px;
-    font-weight: 600;
     color: var(--wp--preset--color--workspace-dark, #0b102c);
 }
 
