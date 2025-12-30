@@ -19,6 +19,13 @@ add_filter('body_class', function($classes) {
     return $classes;
 });
 
+// Output hero BEFORE <main> tag opens (via Blocksy hook)
+add_action('blocksy:content:before', function() {
+    if (function_exists('blocksy_output_hero_section')) {
+        echo blocksy_output_hero_section(['type' => 'type-2']);
+    }
+});
+
 get_header();
 
 // Get current workspace term
@@ -26,9 +33,7 @@ $workspace = get_queried_object();
 // Note: Sidebar frame is included via blocksy:header:after hook in functions.php
 ?>
 
-<!-- Main Content Area -->
-<main id="primary" class="site-main">
-    <div class="workspace-archive-content">
+<div class="workspace-archive-content">
         <?php
         // Special handling for Learning workspace - show Tutor dashboard directly
         if ($workspace->slug === 'learning' && class_exists('Workspaces_Tutor_Dashboard')) {
@@ -112,7 +117,6 @@ $workspace = get_queried_object();
             <?php
         }
         ?>
-    </div>
-</main>
+</div>
 
 <?php get_footer(); ?>
