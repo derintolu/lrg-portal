@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>21st Century Lending — Brand Style Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Primary Colors */
+            --dark-charcoal: #171A1F;
+            --navy-base: #263042;
+            --steel-gray: #444B57;
+            --blue-gray: #405C7A;
+            --primary-blue: #2563EB;
+            
+            /* Accent Colors */
+            --rich-teal: #20D4DA;
+            --light-blue: #7DB3E8;
+            --blue-mist: #B6C7D9;
+            --lighter-blue: #C3D9F1;
+            --light-gray: #DADEE3;
+            
+            /* Background Colors */
+            --off-white: #F8F7F9;
+            --pure-white: #FFFFFF;
+            
+            /* Gradients */
+            --primary-gradient: linear-gradient(90deg, #263042 0%, #2563EB 35%, #20D4DA 70%, #7DB3E8 100%);
+            --hero-gradient: linear-gradient(135deg, #2563EB 0%, #20D4DA 100%);
+            --subtle-gradient: linear-gradient(180deg, #F8F7F9 0%, #C3D9F1 100%);
+            --button-hover-gradient: linear-gradient(90deg, #2563EB 0%, #20D4DA 50%, #2563EB 100%);
+            
+            /* Typography */
+            --font-family: 'Mona Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            
+            /* Spacing */
+            --section-padding: 80px;
+            --container-max: 1280px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            background: var(--off-white);
+            color: var(--dark-charcoal);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--light-gray);
+            padding: 16px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--dark-charcoal);
+        }
+        
+        .nav-logo svg {
+            width: 40px;
+            height: 40px;
+        }
+        
+        .nav-logo span {
+            font-weight: 700;
+            font-size: 18px;
+            letter-spacing: -0.02em;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--steel-gray);
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.2s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-blue);
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: var(--hero-gradient);
+            padding-top: 80px;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 80%;
+            height: 200%;
+            background: radial-gradient(ellipse at center, rgba(32, 212, 218, 0.3) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+        
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background: linear-gradient(to top, var(--off-white), transparent);
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.3; }
+            50% { transform: scale(1.1) rotate(5deg); opacity: 0.5; }
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: white;
+            padding: 40px;
+            max-width: 900px;
+        }
+        
+        .hero-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 32px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .hero h1 {
+            font-size: clamp(48px, 8vw, 96px);
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: -0.03em;
+            margin-bottom: 24px;
+            font-stretch: 125%;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+        
+        /* Main Content */
+        main {
+            position: relative;
+            z-index: 1;
+        }
+        
+        section {
+            padding: var(--section-padding) 40px;
+            max-width: var(--container-max);
+            margin: 0 auto;
+        }
+        
+        .section-header {
+            margin-bottom: 48px;
+        }
+        
+        .section-label {
+            display: inline-block;
+            padding: 6px 14px;
+            background: var(--hero-gradient);
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            border-radius: 4px;
+            margin-bottom: 16px;
+        }
+        
+        .section-title {
+            font-size: 40px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: var(--dark-charcoal);
+            font-stretch: 125%;
+        }
+        
+        .section-description {
+            color: var(--steel-gray);
+            font-size: 17px;
+            margin-top: 12px;
+            max-width: 600px;
+        }
+        
+        /* Color Palette */
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-bottom: 48px;
+        }
+        
+        .color-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .color-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+        }
+        
+        .color-swatch {
+            height: 100px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-start;
+            padding: 12px;
+        }
+        
+        .color-hex {
+            font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 8px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 4px;
+            backdrop-filter: blur(4px);
+        }
+        
+        .color-info {
+            padding: 16px;
+        }
+        
+        .color-name {
+            font-weight: 700;
+            font-size: 15px;
+            margin-bottom: 4px;
+        }
+        
+        .color-usage {
+            font-size: 13px;
+            color: var(--steel-gray);
+        }
+        
+        /* Gradient Section */
+        .gradient-showcase {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        
+        .gradient-item {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        }
+        
+        .gradient-preview {
+            height: 80px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .gradient-label {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+        
+        .gradient-desc {
+            font-size: 13px;
+            color: var(--steel-gray);
+        }
+        
+        /* Typography Section */
+        .type-showcase {
+            background: white;
+            border-radius: 24px;
+            padding: 48px;
+            box-shadow: 0 4px 40px rgba(0, 0, 0, 0.06);
+        }
+        
+        .type-sample {
+            margin-bottom: 48px;
+            padding-bottom: 48px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .type-sample:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .type-meta {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+        
+        .type-meta span {
+            font-size: 12px;
+            color: var(--steel-gray);
+            background: var(--off-white);
+            padding: 4px 12px;
+            border-radius: 100px;
+        }
+        
+        .h1-sample {
+            font-size: 56px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            font-stretch: 125%;
+            line-height: 1.1;
+        }
+        
+        .h2-sample {
+            font-size: 40px;
+            font-weight: 700;
+            letter-spacing: -0.015em;
+            font-stretch: 110%;
+            line-height: 1.2;
+        }
+        
+        .h3-sample {
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            font-stretch: 105%;
+            line-height: 1.3;
+        }
+        
+        .h4-sample {
+            font-size: 20px;
+            font-weight: 600;
+            font-stretch: 105%;
+            line-height: 1.4;
+        }
+        
+        .body-large-sample {
+            font-size: 18px;
+            font-weight: 400;
+            line-height: 1.7;
+            color: var(--steel-gray);
+        }
+        
+        .body-sample {
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.6;
+            color: var(--steel-gray);
+        }
+        
+        .caption-sample {
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--blue-gray);
+        }
+        
+        .link-sample {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--primary-blue);
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s ease;
+        }
+        
+        .link-sample:hover {
+            border-bottom-color: var(--primary-blue);
+        }
+        
+        /* Typography Guidelines */
+        .type-guidelines {
+            background: var(--navy-base);
+            color: white;
+            border-radius: 16px;
+            padding: 32px;
+            margin-top: 32px;
+        }
+        
+        .type-guidelines h4 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--rich-teal);
+        }
+        
+        .type-guidelines ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+        
+        .type-guidelines li {
+            font-size: 14px;
+            line-height: 1.6;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .type-guidelines li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 6px;
+            height: 6px;
+            background: var(--rich-teal);
+            border-radius: 50%;
+        }
+        
+        .type-guidelines li strong {
+            color: var(--light-blue);
+        }
+        
+        /* Logo Section */
+        .logo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+        
+        .logo-card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s ease;
+        }
+        
+        .logo-card:hover {
+            transform: scale(1.02);
+        }
+        
+        .logo-card.dark {
+            background: var(--navy-base);
+        }
+        
+        .logo-card.gradient {
+            background: var(--hero-gradient);
+        }
+        
+        .logo-card svg {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 16px;
+        }
+        
+        .logo-card .logo-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--steel-gray);
+        }
+        
+        .logo-card.dark .logo-label,
+        .logo-card.gradient .logo-label {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        /* Brand Marks */
+        .brand-marks {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        
+        .brand-mark-card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            min-height: 120px;
+        }
+        
+        .brand-mark-card.dark {
+            background: var(--navy-base);
+        }
+        
+        .brand-mark-card.gradient {
+            background: var(--hero-gradient);
+        }
+        
+        .brand-mark {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .brand-mark svg {
+            width: 48px;
+            height: 48px;
+            flex-shrink: 0;
+        }
+        
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
+        
+        .brand-text .century {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+        
+        .brand-text .lending {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            opacity: 0.7;
+        }
+        
+        .brand-mark-card.dark .brand-text,
+        .brand-mark-card.gradient .brand-text {
+            color: white;
+        }
+        
+        /* Logo Guidelines */
+        .logo-guidelines {
+            background: linear-gradient(135deg, var(--off-white) 0%, var(--lighter-blue) 100%);
+            border-radius: 16px;
+            padding: 32px;
+            margin-top: 48px;
+        }
+        
+        .logo-guidelines h4 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--dark-charcoal);
+        }
+        
+        .logo-guidelines ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 12px;
+        }
+        
+        .logo-guidelines li {
+            font-size: 14px;
+            line-height: 1.6;
+            padding-left: 20px;
+            position: relative;
+            color: var(--navy-base);
+        }
+        
+        .logo-guidelines li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 6px;
+            height: 6px;
+            background: var(--primary-blue);
+            border-radius: 50%;
+        }
+        
+        .logo-guidelines li strong {
+            color: var(--dark-charcoal);
+        }
+        
+        /* Components Section */
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+        }
+        
+        .component-card {
+            background: white;
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06);
+        }
+        
+        .component-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--rich-teal);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 24px;
+        }
+        
+        /* Buttons */
+        .button-showcase {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 28px;
+            font-family: var(--font-family);
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .btn-primary {
+            background: var(--rich-teal);
+            color: var(--dark-charcoal);
+        }
+        
+        .btn-primary:hover {
+            background: var(--button-hover-gradient);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s ease infinite;
+            color: white;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: 100% 0; }
+            100% { background-position: -100% 0; }
+        }
+        
+        .btn-secondary {
+            background: var(--primary-blue);
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--navy-base);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary-blue);
+            color: white;
+        }
+        
+        /* Form Elements */
+        .form-showcase {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .form-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--navy-base);
+        }
+        
+        .form-input {
+            padding: 14px 16px;
+            font-family: var(--font-family);
+            font-size: 15px;
+            border: 2px solid var(--light-gray);
+            border-radius: 10px;
+            transition: all 0.2s ease;
+            outline: none;
+        }
+        
+        .form-input:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+        }
+        
+        .form-input::placeholder {
+            color: var(--blue-mist);
+        }
+        
+        /* Usage Examples */
+        .usage-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+        
+        @media (max-width: 900px) {
+            .usage-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .usage-card {
+            border-radius: 16px;
+            padding: 32px;
+            color: white;
+        }
+        
+        .usage-card:nth-child(1) {
+            background: var(--hero-gradient);
+        }
+        
+        .usage-card:nth-child(2) {
+            background: linear-gradient(135deg, var(--navy-base) 0%, var(--blue-gray) 100%);
+        }
+        
+        .usage-card:nth-child(3) {
+            background: linear-gradient(135deg, var(--navy-base) 0%, var(--rich-teal) 100%);
+        }
+        
+        .usage-card h4 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        
+        .usage-card p {
+            font-size: 14px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        /* CDN Info */
+        .cdn-section {
+            background: var(--dark-charcoal);
+            border-radius: 16px;
+            padding: 32px;
+            margin-top: 48px;
+            color: white;
+        }
+        
+        .cdn-section h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--rich-teal);
+        }
+        
+        .cdn-url {
+            background: var(--navy-base);
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+            font-size: 12px;
+            margin-bottom: 12px;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        
+        .cdn-section p {
+            font-size: 13px;
+            color: var(--blue-mist);
+            margin-top: 16px;
+        }
+        
+        .cdn-section code {
+            background: var(--navy-base);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--navy-base);
+            color: white;
+            padding: 60px 40px;
+            margin-top: 80px;
+        }
+        
+        .footer-content {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+        
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .footer-brand svg {
+            width: 48px;
+            height: 48px;
+        }
+        
+        .footer-brand-text {
+            font-weight: 700;
+            font-size: 16px;
+        }
+        
+        .footer-text {
+            font-size: 14px;
+            color: var(--blue-mist);
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-in {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 12px 20px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            section {
+                padding: 60px 20px;
+            }
+            
+            .hero h1 {
+                font-size: 40px;
+            }
+            
+            .type-showcase {
+                padding: 24px;
+            }
+            
+            .h1-sample {
+                font-size: 36px;
+            }
+            
+            .h2-sample {
+                font-size: 28px;
+            }
+            
+            .section-title {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="#" class="nav-logo">
+            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="32" cy="32" r="30" fill="#2563EB"/>
+                <text x="32" y="42" text-anchor="middle" fill="white" font-family="Mona Sans, sans-serif" font-size="28" font-weight="800">21</text>
+            </svg>
+            <span>21st Century Lending</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="#colors">Colors</a></li>
+            <li><a href="#typography">Typography</a></li>
+            <li><a href="#logos">Logos</a></li>
+            <li><a href="#components">Components</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-content">
+            <span class="hero-badge">Brand Guidelines 2025</span>
+            <h1>Style Guide</h1>
+            <p>A comprehensive design system for 21st Century Lending — ensuring consistency, professionalism, and recognition across all touchpoints.</p>
+        </div>
+    </header>
+
+    <main>
+        <!-- Colors Section -->
+        <section id="colors">
+            <div class="section-header">
+                <span class="section-label">Color Palette</span>
+                <h2 class="section-title">Brand Colors</h2>
+                <p class="section-description">Our color system creates a professional, trustworthy feel while maintaining energy and modernity through strategic accent usage.</p>
+            </div>
+            
+            <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 20px; color: var(--navy-base);">Primary Colors</h3>
+            <div class="color-grid">
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #171A1F;">
+                        <span class="color-hex">#171A1F</span>
+                    </div>
+                    <div class="color-info">
+                        <div class="color-name">Dark Charcoal</div>
+                        <div class="color-usage">Text, Headers</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #263042;">
+                        <span class="color-hex">#263042</span>
+                    </div>
+                    <div class="color-info">
+                        <div class="color-name">Navy Base</div>
+                        <div class="color-usage">Secondary Text</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #444B57;">
+                        <span class="color-hex">#444B57</span>
+                    </div>
+                    <div class="color-info">
+                        <div class="color-name">Steel Gray</div>
+                        <div class="color-usage">Supporting Text</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #405C7A;">
+                        <span class="color-hex">#405C7A</span>
+                    </div>
+                    <div class="color-info">
+                        <div class="color-name">Blue Gray</div>
+                        <div class="color-usage">Borders, Icons</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #2563EB;">
+                        <span class="color-hex">#2563EB</span>
+                    </div>
+                    <div class="color-info">
+                        <div class="color-name">Primary Blue</div>
+                        <div class="color-usage">CTAs, Links</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 20px; color: var(--navy-base);">Accent & Secondary Colors</h3>
+            <div class="color-grid">
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #20D4DA;">
+                        <span class="color-hex" style="color: #171A1F;">#20D4DA</span>
+                    </div>
+                    <div class="color-info">
+                        <div class="color-name">Rich Teal</div>
+                        <div class="color-usage">Accents, Highlights</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #7DB3E8;">
+                        <span class="color-hex" style="color: #171A1F;">#7DB3E8</span>
+                    </div>
+                    <div class="color-info">
+                        <div class="color-name">Light Blue</div>
+                        <div class="color-usage">Backgrounds</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #B6C7D9;">
+                        <span class="color-hex" style="color: #171A1F;">#B6C7D9</span>
+                    </div>
+                    <div class="color-info">
+                        <div class="color-name">Blue Mist</div>
+                        <div class="color-usage">Subtle Accents</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #C3D9F1;">
+                        <span class="color-hex" style="color: #171A1F;">#C3D9F1</span>
+                    </div>
+                    <div class="color-info">
+                        <div class="color-name">Lighter Blue</div>
+                        <div class="color-usage">Light Backgrounds</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #DADEE3;">
+                        <span class="color-hex" style="color: #171A1F;">#DADEE3</span>
+                    </div>
+                    <div class="color-info">
+                        <div class="color-name">Light Gray</div>
+                        <div class="color-usage">Dividers</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 20px; color: var(--navy-base);">Background Colors</h3>
+            <div class="color-grid" style="max-width: 400px;">
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #F8F7F9; border: 1px solid #DADEE3;">
+                        <span class="color-hex" style="color: #171A1F;">#F8F7F9</span>
+                    </div>
+                    <div class="color-info">
+                        <div class="color-name">Off White</div>
+                        <div class="color-usage">Page Background</div>
+                    </div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #FFFFFF; border: 1px solid #DADEE3;">
+                        <span class="color-hex" style="color: #171A1F;">#FFFFFF</span>
+                    </div>
+                    <div class="color-info">
+                        <div class="color-name">Pure White</div>
+                        <div class="color-usage">Card Backgrounds</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="font-size: 18px; font-weight: 700; margin: 48px 0 20px; color: var(--navy-base);">Brand Gradients</h3>
+            <div class="gradient-showcase">
+                <div class="gradient-item">
+                    <div class="gradient-preview" style="background: linear-gradient(90deg, #263042 0%, #2563EB 35%, #20D4DA 70%, #7DB3E8 100%);"></div>
+                    <div class="gradient-label">Primary Brand Gradient</div>
+                    <div class="gradient-desc">Navy → Primary Blue → Rich Teal → Light Blue</div>
+                </div>
+                <div class="gradient-item">
+                    <div class="gradient-preview" style="background: linear-gradient(135deg, #2563EB 0%, #20D4DA 100%);"></div>
+                    <div class="gradient-label">Hero Section Gradient</div>
+                    <div class="gradient-desc">Primary Blue → Rich Teal (135° diagonal)</div>
+                </div>
+                <div class="gradient-item">
+                    <div class="gradient-preview" style="background: linear-gradient(180deg, #F8F7F9 0%, #C3D9F1 100%);"></div>
+                    <div class="gradient-label">Subtle Background Gradient</div>
+                    <div class="gradient-desc">Off White → Lighter Blue (vertical)</div>
+                </div>
+                <div class="gradient-item">
+                    <div class="gradient-preview" style="background: linear-gradient(90deg, #2563EB 0%, #20D4DA 50%, #2563EB 100%);"></div>
+                    <div class="gradient-label">Button Hover States</div>
+                    <div class="gradient-desc">Primary Blue → Rich Teal → Primary Blue</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Typography Section -->
+        <section id="typography">
+            <div class="section-header">
+                <span class="section-label">Typography</span>
+                <h2 class="section-title">Mona Sans Variable</h2>
+                <p class="section-description">Our primary typeface provides excellent readability with a modern, professional character. Variable font support enables precise weight and width control.</p>
+            </div>
+            
+            <div class="type-showcase">
+                <div class="type-sample">
+                    <div class="type-meta">
+                        <span>Headlines with Extended Width</span>
+                        <span>Font-weight: 800</span>
+                        <span>Size: 56px</span>
+                        <span>Stretch: 125%</span>
+                    </div>
+                    <div class="h1-sample">H1 Heading</div>
+                </div>
+                
+                <div class="type-sample">
+                    <div class="type-meta">
+                        <span>Font-weight: 700</span>
+                        <span>Size: 40px</span>
+                        <span>Stretch: 110%</span>
+                    </div>
+                    <div class="h2-sample">H2 Heading</div>
+                </div>
+                
+                <div class="type-sample">
+                    <div class="type-meta">
+                        <span>Font-weight: 600</span>
+                        <span>Size: 28px</span>
+                        <span>Stretch: 105%</span>
+                    </div>
+                    <div class="h3-sample">H3 Heading</div>
+                </div>
+                
+                <div class="type-sample">
+                    <div class="type-meta">
+                        <span>Font-weight: 600</span>
+                        <span>Size: 20px</span>
+                        <span>Stretch: 105%</span>
+                    </div>
+                    <div class="h4-sample">H4 Heading</div>
+                </div>
+                
+                <div class="type-sample">
+                    <div class="type-meta">
+                        <span>Body Large Text</span>
+                        <span>Font-weight: 400</span>
+                        <span>Size: 18px</span>
+                    </div>
+                    <div class="body-large-sample">Body text for larger content areas, providing excellent readability for paragraphs and longer form content.</div>
+                </div>
+                
+                <div class="type-sample">
+                    <div class="type-meta">
+                        <span>Body Regular Text</span>
+                        <span>Font-weight: 400</span>
+                        <span>Size: 16px</span>
+                    </div>
+                    <div class="body-sample">Standard body text used throughout the interface for general content, descriptions, and informational text.</div>
+                </div>
+                
+                <div class="type-sample">
+                    <div class="type-meta">
+                        <span>Caption Text</span>
+                        <span>Font-weight: 400</span>
+                        <span>Size: 13px</span>
+                    </div>
+                    <div class="caption-sample">Caption text for labels, metadata, and supporting information.</div>
+                </div>
+                
+                <div class="type-sample">
+                    <div class="type-meta">
+                        <span>Link Text</span>
+                        <span>Font-weight: 500</span>
+                        <span>Size: 16px</span>
+                    </div>
+                    <a href="#" class="link-sample">This is a link style</a>
+                </div>
+            </div>
+            
+            <div class="type-guidelines">
+                <h4>Typography Guidelines</h4>
+                <ul>
+                    <li><strong>Headlines:</strong> Use font-stretch: 125% for extended widths with proper variable font support</li>
+                    <li><strong>Body Text:</strong> Use font-stretch: normal (100%) for optimal readability</li>
+                    <li><strong>Hierarchy:</strong> Maintain consistent font weights and stretch values</li>
+                    <li><strong>Line Height:</strong> 1.5x for body text, 1.2x for headlines</li>
+                    <li><strong>Letter Spacing:</strong> -0.02em for large headlines, -0.01em for subheadings</li>
+                </ul>
+            </div>
+            
+            <div class="cdn-section">
+                <h4>Using Fontsource CDN</h4>
+                <p style="margin-bottom: 12px; color: white;">CDN URLs (Ready to Use):</p>
+                <div class="cdn-url">Normal: cdn.jsdelivr.net/npm/@fontsource-variable/mona-sans@latest/files/mona-sans-latin-wdth-normal.woff2</div>
+                <div class="cdn-url">Italic: cdn.jsdelivr.net/npm/@fontsource-variable/mona-sans@latest/files/mona-sans-latin-wdth-italic.woff2</div>
+                <p style="margin-top: 20px;"><strong style="color: white;">Alternative - Install via npm:</strong></p>
+                <div class="cdn-url">npm install @fontsource-variable/mona-sans</div>
+                <p>CDN provides automatic updates and global caching. Variable font supports weights (200-900) and widths (75%-125%).</p>
+            </div>
+        </section>
+
+        <!-- Logos Section -->
+        <section id="logos">
+            <div class="section-header">
+                <span class="section-label">Brand Identity</span>
+                <h2 class="section-title">Logo Variations</h2>
+                <p class="section-description">Our logo system provides flexibility across different applications while maintaining brand consistency.</p>
+            </div>
+            
+            <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 20px; color: var(--navy-base);">Logo Mark (Icon Only)</h3>
+            <div class="logo-grid">
+                <div class="logo-card">
+                    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="32" cy="32" r="30" fill="#2563EB"/>
+                        <text x="32" y="42" text-anchor="middle" fill="white" font-family="Mona Sans, sans-serif" font-size="28" font-weight="800">21</text>
+                    </svg>
+                    <div class="logo-label">Primary Mark</div>
+                </div>
+                <div class="logo-card dark">
+                    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="32" cy="32" r="30" fill="white"/>
+                        <text x="32" y="42" text-anchor="middle" fill="#263042" font-family="Mona Sans, sans-serif" font-size="28" font-weight="800">21</text>
+                    </svg>
+                    <div class="logo-label">Reversed Mark</div>
+                </div>
+                <div class="logo-card gradient">
+                    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#2563EB"/>
+                                <stop offset="100%" style="stop-color:#20D4DA"/>
+                            </linearGradient>
+                        </defs>
+                        <circle cx="32" cy="32" r="30" fill="url(#grad1)"/>
+                        <text x="32" y="42" text-anchor="middle" fill="white" font-family="Mona Sans, sans-serif" font-size="28" font-weight="800">21</text>
+                    </svg>
+                    <div class="logo-label">Gradient Mark</div>
+                </div>
+                <div class="logo-card" style="background: var(--rich-teal);">
+                    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="32" cy="32" r="30" fill="#171A1F"/>
+                        <text x="32" y="42" text-anchor="middle" fill="#20D4DA" font-family="Mona Sans, sans-serif" font-size="28" font-weight="800">21</text>
+                    </svg>
+                    <div class="logo-label" style="color: var(--dark-charcoal);">Accent Mark</div>
+                </div>
+            </div>
+            
+            <h3 style="font-size: 18px; font-weight: 700; margin: 48px 0 20px; color: var(--navy-base);">Brand Mark (Logo + Wordmark)</h3>
+            <div class="brand-marks">
+                <div class="brand-mark-card">
+                    <div class="brand-mark">
+                        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="32" cy="32" r="30" fill="#2563EB"/>
+                            <text x="32" y="42" text-anchor="middle" fill="white" font-family="Mona Sans, sans-serif" font-size="28" font-weight="800">21</text>
+                        </svg>
+                        <div class="brand-text" style="color: var(--dark-charcoal);">
+                            <span class="century">CENTURY</span>
+                            <span class="lending">LENDING</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="brand-mark-card dark">
+                    <div class="brand-mark">
+                        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="32" cy="32" r="30" fill="white"/>
+                            <text x="32" y="42" text-anchor="middle" fill="#263042" font-family="Mona Sans, sans-serif" font-size="28" font-weight="800">21</text>
+                        </svg>
+                        <div class="brand-text">
+                            <span class="century">CENTURY</span>
+                            <span class="lending">LENDING</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="brand-mark-card gradient">
+                    <div class="brand-mark">
+                        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#2563EB"/>
+                                    <stop offset="100%" style="stop-color:#20D4DA"/>
+                                </linearGradient>
+                            </defs>
+                            <circle cx="32" cy="32" r="30" fill="url(#grad2)"/>
+                            <text x="32" y="42" text-anchor="middle" fill="white" font-family="Mona Sans, sans-serif" font-size="28" font-weight="800">21</text>
+                        </svg>
+                        <div class="brand-text">
+                            <span class="century">CENTURY</span>
+                            <span class="lending">LENDING</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="logo-guidelines">
+                <h4>Logo Usage Guidelines</h4>
+                <ul>
+                    <li><strong>Logo Mark:</strong> Use for social media profiles, favicons, and small applications</li>
+                    <li><strong>Brand Mark:</strong> Primary logo for headers, business cards, and main brand applications</li>
+                    <li><strong>Minimum Sizes:</strong> Logo mark 20px digital / 0.25" print, Brand mark 120px digital / 1" print</li>
+                    <li><strong>Clear Space:</strong> Maintain space equal to the height of the circle around both versions</li>
+                    <li><strong>Hierarchy:</strong> Prefer the full brand mark when space allows, logo mark for constrained spaces</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Components Section -->
+        <section id="components">
+            <div class="section-header">
+                <span class="section-label">UI Components</span>
+                <h2 class="section-title">Design Elements</h2>
+                <p class="section-description">Core interface components following our brand guidelines for consistent user experiences.</p>
+            </div>
+            
+            <div class="components-grid">
+                <div class="component-card">
+                    <div class="component-title">Buttons</div>
+                    <div class="button-showcase">
+                        <button class="btn btn-primary">Primary Action</button>
+                        <button class="btn btn-secondary">Secondary Action</button>
+                        <button class="btn btn-outline">Outline Button</button>
+                    </div>
+                </div>
+                
+                <div class="component-card">
+                    <div class="component-title">Form Elements</div>
+                    <div class="form-showcase">
+                        <div class="form-group">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" class="form-input" placeholder="you@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-input" placeholder="John Doe">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 style="font-size: 18px; font-weight: 700; margin: 48px 0 20px; color: var(--navy-base);">Usage Examples</h3>
+            <div class="usage-grid">
+                <div class="usage-card">
+                    <h4>Call-to-Action Buttons</h4>
+                    <p>Rich Teal for primary actions, with gradient hover effects transitioning through your blue spectrum.</p>
+                </div>
+                <div class="usage-card">
+                    <h4>Data Visualizations</h4>
+                    <p>Use the Rich Teal as the primary data color with your blue gradients for multi-series charts.</p>
+                </div>
+                <div class="usage-card">
+                    <h4>Hero Sections</h4>
+                    <p>Deep navy to Rich Teal gradients create striking, professional hero backgrounds.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="32" cy="32" r="30" fill="white"/>
+                    <text x="32" y="42" text-anchor="middle" fill="#263042" font-family="Mona Sans, sans-serif" font-size="28" font-weight="800">21</text>
+                </svg>
+                <span class="footer-brand-text">21st Century Lending</span>
+            </div>
+            <div class="footer-text">
+                Brand Style Guide · Version 1.0 · 2025
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.color-card, .gradient-item, .logo-card, .brand-mark-card, .component-card, .usage-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

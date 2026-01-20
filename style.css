@@ -193,3 +193,195 @@ Text Domain: workspaces
         scrollbar-color: rgba(0, 0, 0, 0.3) rgba(0, 0, 0, 0.1);
     }
 }
+
+/* ==========================================================================
+   Fluent Booking Dashboard Widgets - 21st Century Brand Gradients
+   Overrides the default widget styles with brand colors
+   ========================================================================== */
+
+/* Brand Color Variables */
+:root {
+    /* Primary Colors */
+    --21c-dark-charcoal: #171A1F;
+    --21c-navy-base: #263042;
+    --21c-steel-gray: #444B57;
+    --21c-blue-gray: #405C7A;
+    --21c-primary-blue: #2563EB;
+    
+    /* Accent Colors */
+    --21c-rich-teal: #20D4DA;
+    --21c-light-blue: #7DB3E8;
+    --21c-blue-mist: #B6C7D9;
+    --21c-lighter-blue: #C3D9F1;
+    
+    /* Gradients */
+    --21c-primary-gradient: linear-gradient(90deg, #263042 0%, #2563EB 35%, #20D4DA 70%, #7DB3E8 100%);
+    --21c-hero-gradient: linear-gradient(135deg, #2563EB 0%, #20D4DA 100%);
+    --21c-subtle-gradient: linear-gradient(180deg, #F8F7F9 0%, #C3D9F1 100%);
+    --21c-card-gradient-1: linear-gradient(135deg, #2563EB 0%, #20D4DA 100%);
+    --21c-card-gradient-2: linear-gradient(135deg, #263042 0%, #405C7A 100%);
+    --21c-card-gradient-3: linear-gradient(135deg, #263042 0%, #20D4DA 100%);
+    --21c-card-gradient-4: linear-gradient(135deg, #171A1F 0%, #2563EB 100%);
+}
+
+/* Fluent Booking Overview Widgets Container */
+.overview-widgets {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+}
+
+/* Individual Overview Widget Cards */
+.overview-widget {
+    position: relative;
+    border-radius: 16px;
+    padding: 24px;
+    color: white;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.overview-widget:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+}
+
+/* Widget 1: Total Bookings - Hero Gradient (Blue to Teal) */
+.overview-widget:nth-child(1) {
+    background: var(--21c-card-gradient-1) !important;
+}
+
+/* Widget 2: Completed Bookings - Navy to Blue Gray */
+.overview-widget:nth-child(2) {
+    background: var(--21c-card-gradient-2) !important;
+}
+
+/* Widget 3: Cancelled Bookings - Navy to Teal */
+.overview-widget:nth-child(3) {
+    background: var(--21c-card-gradient-3) !important;
+}
+
+/* Widget 4: Total Guests - Dark Charcoal to Blue */
+.overview-widget:nth-child(4) {
+    background: var(--21c-card-gradient-4) !important;
+}
+
+/* Widget Heading (Large Number) */
+.overview-widget h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin: 0 0 8px 0;
+    color: white !important;
+    line-height: 1;
+    letter-spacing: -0.02em;
+}
+
+/* Widget Label (e.g., "Total Bookings") */
+.overview-widget p {
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0 0 12px 0;
+    color: rgba(255, 255, 255, 0.9) !important;
+    text-transform: none;
+}
+
+/* Widget Stats/Percentage Row */
+.overview-widget h3 {
+    font-size: 0.85rem;
+    font-weight: 400;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.75) !important;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Stat Badge (percentage) */
+.overview-widget .stat {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 600;
+    color: white !important;
+    backdrop-filter: blur(4px);
+}
+
+/* Stat Icon */
+.overview-widget .stat .el-icon {
+    display: inline-flex;
+    width: 14px;
+    height: 14px;
+}
+
+.overview-widget .stat .el-icon svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+}
+
+/* Widget Icon (Calendar/Check/X/Users) - positioned top right */
+.overview-widget > .icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+}
+
+.overview-widget > .icon svg {
+    width: 28px;
+    height: 28px;
+    fill: white;
+    opacity: 0.9;
+}
+
+/* Alternative: Full Brand Gradient across all widgets (uncomment to use) */
+/*
+.overview-widget {
+    background: var(--21c-primary-gradient) !important;
+}
+*/
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .overview-widgets {
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+    
+    .overview-widget {
+        padding: 20px;
+    }
+    
+    .overview-widget h1 {
+        font-size: 2.25rem;
+    }
+    
+    .overview-widget > .icon {
+        width: 40px;
+        height: 40px;
+        top: 16px;
+        right: 16px;
+    }
+    
+    .overview-widget > .icon svg {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .overview-widgets {
+        grid-template-columns: 1fr;
+    }
+}
