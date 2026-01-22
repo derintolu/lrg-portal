@@ -35,6 +35,27 @@ define('WORKSPACES_THEME_URL', get_stylesheet_directory_uri());
 require_once WORKSPACES_THEME_PATH . '/includes/sidebar-insights-slider.php';
 
 /**
+ * Time-based greeting shortcode
+ * Usage: [time_greeting] outputs "Good Morning, Derin!"
+ */
+add_shortcode('time_greeting', function() {
+    $hour = (int) current_time('G');
+    
+    if ($hour >= 5 && $hour < 12) $greeting = 'Good Morning';
+    elseif ($hour >= 12 && $hour < 17) $greeting = 'Good Afternoon';
+    elseif ($hour >= 17 && $hour < 21) $greeting = 'Good Evening';
+    else $greeting = 'Good Night';
+    
+    $first_name = wp_get_current_user()->user_firstname ?: 'there';
+    
+    return '<h2 style="color: #ffffff; font-size: 20px; font-weight: 600; margin: 0;">' . esc_html("$greeting, $first_name!") . '</h2>';
+});
+
+// Enable shortcodes in widgets
+add_filter('widget_text', 'do_shortcode');
+add_filter('widget_custom_html_content', 'do_shortcode');
+
+/**
  * Load Lucide Icons from workspaces plugin for sidebar navigation
  */
 $lucide_icons_path = WP_PLUGIN_DIR . '/workspaces/includes/class-lucide-icons.php';
@@ -354,6 +375,29 @@ add_action('blocksy:header:after', function () {
 add_action('blocksy:header:after', function () {
     include get_stylesheet_directory() . '/workspace-sidebar-frame.php';
 });
+
+/**
+ * Force Blocksy account modal to load in footer for sidebar login
+ * Shows for logged-out users on workspace pages
+ */
+add_action('wp_footer', function () {
+    // Only load for logged-out users on workspace pages
+    if (is_user_logged_in()) {
+        return;
+    }
+    
+    if (!function_exists('workspaces_is_workspace_page') || !workspaces_is_workspace_page()) {
+        return;
+    }
+    
+    // Use Blocksy Pro's header class to render the modal
+    if (class_exists('\Blocksy\Plugin') && class_exists('Blocksy_Header_Builder_Render')) {
+        $plugin = \Blocksy\Plugin::instance();
+        if ($plugin->header && method_exists($plugin->header, 'retrieve_account_modal')) {
+            echo $plugin->header->retrieve_account_modal();
+        }
+    }
+}, 5);
 
 /**
  * Add JavaScript to handle sidebar scroll
